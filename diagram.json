@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "author": "יניב מאור",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 18.92, "left": 43.17, "attrs": {} },
+    { "type": "board-ssd1306", "id": "oled1", "top": 108.74, "left": 221.03, "attrs": {} },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultrasonic1",
+      "top": -132.9,
+      "left": -196.1,
+      "attrs": { "distance": "186" }
+    },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultrasonic2",
+      "top": -132.9,
+      "left": -407.3,
+      "attrs": { "distance": "91" }
+    },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultrasonic3",
+      "top": -132.9,
+      "left": -628.1,
+      "attrs": { "distance": "116" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "oled1:SCL", "esp:D22", "green", [ "v0" ] ],
+    [ "oled1:GND", "esp:GND.1", "black", [ "v-10.03", "h-45.15", "v89.62" ] ],
+    [ "esp:3V3", "oled1:VCC", "green", [ "v-0.01", "h10.98", "v-109.59", "h47.28" ] ],
+    [ "esp:D21", "oled1:SDA", "yellow", [ "h20.35", "v-8.37", "h93.43" ] ],
+    [ "ultrasonic1:GND", "esp:GND.2", "black", [ "v0" ] ],
+    [ "ultrasonic2:GND", "esp:GND.2", "black", [ "v0" ] ],
+    [ "ultrasonic3:GND", "esp:GND.2", "black", [ "v0" ] ],
+    [ "ultrasonic1:VCC", "esp:VIN", "red", [ "v0" ] ],
+    [ "ultrasonic2:VCC", "esp:VIN", "red", [ "v0" ] ],
+    [ "ultrasonic3:VCC", "esp:VIN", "red", [ "v0" ] ],
+    [ "ultrasonic2:ECHO", "esp:D32", "green", [ "v0" ] ],
+    [ "ultrasonic2:TRIG", "esp:D33", "green", [ "v0" ] ],
+    [ "ultrasonic3:ECHO", "esp:D25", "green", [ "v0" ] ],
+    [ "ultrasonic3:TRIG", "esp:D26", "green", [ "v0" ] ],
+    [ "ultrasonic1:ECHO", "esp:D27", "green", [ "v0" ] ],
+    [ "ultrasonic1:TRIG", "esp:D14", "green", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
