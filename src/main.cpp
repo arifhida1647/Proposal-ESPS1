@@ -212,10 +212,10 @@ void loop()
   // Send the status array as JSON to the specified URL
   sendJsonData(statusArray);
 
-  delay(1000); // Delay between readings
+  // delay(1000); // Delay between readings
 
-  // Update data from main API
-  getDataFromAPI();
+  // // Update data from main API
+  // getDataFromAPI();
 
   delay(1000); // Fetch data every 1 second
 }
