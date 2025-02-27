@@ -126,21 +126,25 @@ void getDataFromAPI()
 }
 
 // Function to send JSON data via POST request
-void sendJsonData(int statusArray[]) {
-  if (WiFi.status() == WL_CONNECTED) {
+void sendJsonData(int statusArray[])
+{
+  if (WiFi.status() == WL_CONNECTED)
+  {
     HTTPClient http;
 
     // Specify the URL
     http.begin(baseURL);
-    
+
     // Specify content-type header
     http.addHeader("Content-Type", "application/json");
 
     // Construct JSON string manually
     String jsonString = "{ \"statusArray\": [";
-    for (int i = 0; i < NUM_SENSORS; i++) {
+    for (int i = 0; i < NUM_SENSORS; i++)
+    {
       jsonString += String(statusArray[i]);
-      if (i < NUM_SENSORS - 1) {
+      if (i < NUM_SENSORS - 1)
+      {
         jsonString += ", "; // Add a comma between values
       }
     }
@@ -150,37 +154,55 @@ void sendJsonData(int statusArray[]) {
     int httpResponseCode = http.POST(jsonString);
 
     // Check the response
-    if (httpResponseCode > 0) {
+    if (httpResponseCode > 0)
+    {
       String response = http.getString();
       Serial.println("Response Code: " + String(httpResponseCode));
       Serial.println("Response Body: " + response);
-    } else {
+    }
+    else
+    {
       Serial.println("Error on sending POST: " + String(httpResponseCode));
     }
 
     // Close connection
     http.end();
-  } else {
+  }
+  else
+  {
     Serial.println("WiFi Disconnected");
   }
 }
 
 void loop()
 {
-int statusArray[NUM_SENSORS];
+  int statusArray[NUM_SENSORS];
 
   // Read and store data for each sensor
-  for (int i = 0; i < NUM_SENSORS; i++) {
+  // Baca dan simpan data dari tiap sensor
+  // Baca dan simpan data dari tiap sensor
+  for (int i = 0; i < NUM_SENSORS; i++)
+  {
     long distance = getDistance(TRIG_PINS[i], ECHO_PINS[i]);
-    statusArray[i] = (distance < 5) ? 1 : 0; // Store status: 0 if < 5, else 1
+
+    if (distance == 0 || distance > 400)
+    {
+      statusArray[i] = 2; // Sensor tidak terhubung
+    }
+    else
+    {
+      statusArray[i] = (distance < 5) ? 1 : 0; // 1 jika < 5cm, 0 jika >= 5cm
+    }
   }
 
   // Print the JSON-like structure to Serial
   String jsonOutput = "{\n    \"statusArray\": [";
-  for (int i = 0; i < NUM_SENSORS; i++) {
+  for (int i = 0; i < NUM_SENSORS; i++)
+  {
     jsonOutput += String(statusArray[i]);
-    if (i < NUM_SENSORS - 1) {
-      jsonOutput += ", "; // Add a comma between values
+    if (i < NUM_SENSORS - 1)
+    {
+      jsonOutput += ", "; // Tambahkan koma antar nilai
     }
   }
   jsonOutput += "]\n}";
